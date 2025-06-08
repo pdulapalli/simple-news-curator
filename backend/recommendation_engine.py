@@ -30,15 +30,7 @@ class RecommendationEngine:
             )
             articles.extend(personalized_articles)
 
-        # 20% exploration content (4 out of 20 articles)
-        exploration_limit = int(limit * 0.2)
-        exploration_categories = self.preference_engine.get_exploration_categories()[:2]
-        exploration_articles = self.news_fetcher.fetch_exploration_articles(
-            exploration_categories, limit=exploration_limit
-        )
-        articles.extend(exploration_articles)
-
-        # 10% general trending content (2 out of 20 articles)
+        # 30% general trending content (6 out of 20 articles)
         general_limit = limit - len(articles)
         general_articles = self.news_fetcher.fetch_general_articles(limit=general_limit)
         articles.extend(general_articles)
