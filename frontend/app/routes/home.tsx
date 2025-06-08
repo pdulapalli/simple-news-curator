@@ -138,7 +138,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           {articles.length === 0 ? (
             <div className="text-center text-gray-600">
-              No articles found. Please check your backend connection.
+              No articles found.
             </div>
           ) : (
             articles.map((article) => (
