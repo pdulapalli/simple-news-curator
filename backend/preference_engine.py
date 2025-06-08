@@ -75,9 +75,10 @@ class PreferenceEngine:
     def bootstrap_preferences(self):
         """Bootstrap with some default preferences for cold start."""
         default_keywords = [
-            ("technology", 0.2),
-            ("business", 0.1),
-            ("science", 0.1),
+            ("science", 0.2),
+            ("business", 0.2),
+            ("current_events", 0.1),
+            ("technology", 0.1),
             ("health", 0.1),
         ]
 
