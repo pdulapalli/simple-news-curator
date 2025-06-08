@@ -1,3 +1,4 @@
+import datetime
 import os
 import json
 import requests
@@ -54,6 +55,10 @@ class NewsAPI:
             print(f"API request failed: {e}")
             return None
 
+    def _thirty_days_ago(self) -> datetime.datetime:
+        """Get the date 30 days ago in ISO format."""
+        return datetime.datetime.now() - datetime.timedelta(days=30)
+
     def fetch_by_keyword(self, keywords: List[str], limit: int = 10) -> List[Dict]:
         """Fetch articles by keyword search using OR logic."""
         search_query = " | ".join(keywords)
@@ -64,6 +69,7 @@ class NewsAPI:
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
             "sort": "relevance_score",
+            "published_after": self._thirty_days_ago().strftime("%Y-%m-%d"),
         }
 
         # Add trusted domains filter if available
@@ -83,6 +89,7 @@ class NewsAPI:
             "limit": limit,
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
+            "published_after": self._thirty_days_ago().strftime("%Y-%m-%d"),
         }
 
         # Add trusted domains filter if available
@@ -97,10 +104,13 @@ class NewsAPI:
 
     def fetch_general(self, limit: int = 10) -> List[Dict]:
         """Fetch general trending news."""
+        print(f"HMM: {self._thirty_days_ago().isoformat()}")
         params = {
             "limit": limit,
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
+            "sort": "published_at",
+            "published_after": self._thirty_days_ago().strftime("%Y-%m-%d"),
         }
 
         # Add trusted domains filter if available
