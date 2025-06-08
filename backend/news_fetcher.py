@@ -1,4 +1,5 @@
 import os
+import json
 import requests
 import hashlib
 from typing import List, Dict, Optional
@@ -7,6 +8,27 @@ from database import DatabaseManager
 
 NEWS_KIND = "top"
 EXCLUDED_CATEGORIES = ["entertainment", "travel", "politics", "general", "sports"]
+
+def load_trusted_domains():
+    """Load trusted domains from news_sources.json file."""
+    try:
+        with open('news_sources.json', 'r') as f:
+            data = json.load(f)
+            # Extract unique domains from the sources
+            domains = set()
+            for source in data.get('sources', []):
+                domain = source.get('domain')
+                if domain:
+                    domains.add(domain)
+            return list(domains)
+    except FileNotFoundError:
+        print("Warning: news_sources.json not found, using empty domain list")
+        return []
+    except Exception as e:
+        print(f"Error loading trusted domains: {e}")
+        return []
+
+TRUSTED_DOMAINS = load_trusted_domains()
 
 
 class NewsAPI:
@@ -41,6 +63,10 @@ class NewsAPI:
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
             "sort": "relevance_score",
         }
+        
+        # Add trusted domains filter if available
+        if TRUSTED_DOMAINS:
+            params["domains"] = ",".join(TRUSTED_DOMAINS)
 
         data = self._make_request(NEWS_KIND, params)
         if not data or "data" not in data:
@@ -56,6 +82,10 @@ class NewsAPI:
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
         }
+        
+        # Add trusted domains filter if available
+        if TRUSTED_DOMAINS:
+            params["domains"] = ",".join(TRUSTED_DOMAINS)
 
         data = self._make_request(NEWS_KIND, params)
         if not data or "data" not in data:
@@ -70,6 +100,10 @@ class NewsAPI:
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
         }
+        
+        # Add trusted domains filter if available
+        if TRUSTED_DOMAINS:
+            params["domains"] = ",".join(TRUSTED_DOMAINS)
 
         data = self._make_request(NEWS_KIND, params)
         if not data or "data" not in data:

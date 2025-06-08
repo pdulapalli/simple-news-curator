@@ -1,0 +1,413 @@
+{
+  "sources": [
+    {
+      "domain": "usatoday.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "theatlantic.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "abcnews.go.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "aljazeera.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "propublica.org",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "axios.com",
+      "categories": [
+        "general",
+        "tech"
+      ]
+    },
+    {
+      "domain": "thenation.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "alternet.org",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "cnet.com",
+      "categories": [
+        "tech",
+        "general"
+      ]
+    },
+    {
+      "domain": "cbsnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "cnn.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "dailywire.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "espn.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "eonline.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "foxnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "ft.com",
+      "categories": [
+        "general",
+        "business"
+      ]
+    },
+    {
+      "domain": "foreignpolicy.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "marketwatch.com",
+      "categories": [
+        "business",
+        "general"
+      ]
+    },
+    {
+      "domain": "msnbc.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nytimes.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nytimes.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nytimes.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "newrepublic.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nbcnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nypost.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nytimes.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "washingtonpost.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nbcnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nbcnews.com",
+      "categories": [
+        "business",
+        "general",
+        "tech"
+      ]
+    },
+    {
+      "domain": "nbcnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "nbcnews.com",
+      "categories": [
+        "general",
+        "tech"
+      ]
+    },
+    {
+      "domain": "politico.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "qz.com",
+      "categories": [
+        "general",
+        "business",
+        "tech"
+      ]
+    },
+    {
+      "domain": "rt.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "slate.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "salon.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "time.com",
+      "categories": [
+        "general",
+        "business"
+      ]
+    },
+    {
+      "domain": "washingtonpost.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "thehill.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "washingtonpost.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "theweek.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "cnbc.com",
+      "categories": [
+        "general",
+        "business"
+      ]
+    },
+    {
+      "domain": "ft.com",
+      "categories": [
+        "general",
+        "business"
+      ]
+    },
+    {
+      "domain": "usmagazine.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "usmagazine.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "vox.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "washingtonpost.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "foxnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "online.wsj.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "apnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "thedailybeast.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "foxnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "slate.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "theconversation.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "catholicnewsagency.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "cbsnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "cbsnews.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "rss.politico.com",
+      "categories": [
+        "general"
+      ]
+    },
+    {
+      "domain": "businessinsider.com",
+      "categories": [
+        "business",
+        "tech"
+      ]
+    },
+    {
+      "domain": "online.wsj.com",
+      "categories": [
+        "business"
+      ]
+    },
+    {
+      "domain": "androidpolice.com",
+      "categories": [
+        "tech"
+      ]
+    },
+    {
+      "domain": "theverge.com",
+      "categories": [
+        "tech"
+      ]
+    },
+    {
+      "domain": "blog.twitter.com",
+      "categories": [
+        "tech"
+      ]
+    },
+    {
+      "domain": "flow.microsoft.com",
+      "categories": [
+        "tech"
+      ]
+    },
+    {
+      "domain": "postmarkapp.com",
+      "categories": [
+        "tech"
+      ]
+    },
+    {
+      "domain": "inventorspot.com",
+      "categories": [
+        "tech"
+      ]
+    }
+  ]
+}
