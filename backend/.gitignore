@@ -10,3 +10,6 @@ wheels/
 .venv
 
 .env
+
+# local sqlite database
+news_curator.db

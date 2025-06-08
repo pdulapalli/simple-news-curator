@@ -2,10 +2,16 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from database import init_database
 
 load_dotenv()
 
 app = FastAPI(title="News Curator API", version="1.0.0")
+
+# Initialize database on startup
+@app.on_event("startup")
+async def startup_event():
+    init_database()
 
 app.add_middleware(
     CORSMiddleware,
