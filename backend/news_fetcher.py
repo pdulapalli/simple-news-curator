@@ -9,15 +9,16 @@ from database import DatabaseManager
 NEWS_KIND = "top"
 EXCLUDED_CATEGORIES = ["entertainment", "travel", "politics", "general", "sports"]
 
+
 def load_trusted_domains():
     """Load trusted domains from news_sources.json file."""
     try:
-        with open('news_sources.json', 'r') as f:
+        with open("news_sources.json", "r") as f:
             data = json.load(f)
             # Extract unique domains from the sources
             domains = set()
-            for source in data.get('sources', []):
-                domain = source.get('domain')
+            for source in data.get("sources", []):
+                domain = source.get("domain")
                 if domain:
                     domains.add(domain)
             return list(domains)
@@ -27,6 +28,7 @@ def load_trusted_domains():
     except Exception as e:
         print(f"Error loading trusted domains: {e}")
         return []
+
 
 TRUSTED_DOMAINS = load_trusted_domains()
 
@@ -53,17 +55,18 @@ class NewsAPI:
             print(f"API request failed: {e}")
             return None
 
-    def fetch_by_keyword(self, keyword: str, limit: int = 10) -> List[Dict]:
-        """Fetch articles by keyword search."""
+    def fetch_by_keyword(self, keywords: List[str], limit: int = 10) -> List[Dict]:
+        """Fetch articles by keyword search using OR logic."""
+        search_query = " | ".join(keywords)
         params = {
-            "search": keyword,
+            "search": search_query,
             "search_fields": "keywords,title,description",
             "limit": limit,
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
             "sort": "relevance_score",
         }
-        
+
         # Add trusted domains filter if available
         if TRUSTED_DOMAINS:
             params["domains"] = ",".join(TRUSTED_DOMAINS)
@@ -82,7 +85,7 @@ class NewsAPI:
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
         }
-        
+
         # Add trusted domains filter if available
         if TRUSTED_DOMAINS:
             params["domains"] = ",".join(TRUSTED_DOMAINS)
@@ -100,7 +103,7 @@ class NewsAPI:
             "language": "en",
             "exclude_categories": ",".join(EXCLUDED_CATEGORIES),
         }
-        
+
         # Add trusted domains filter if available
         if TRUSTED_DOMAINS:
             params["domains"] = ",".join(TRUSTED_DOMAINS)
@@ -192,114 +195,28 @@ class NewsFetcher:
         self.api = NewsAPI()
         self.db = DatabaseManager()
 
+    def _save_articles(self, articles: List[Dict]):
+        """Helper method to save articles to database."""
+        for article in articles:
+            self.db.insert_article(
+                article["id"],
+                article["title"],
+                article["content"],
+                article["url"],
+                article["source"],
+                article["keywords"],
+            )
+
     def fetch_personalized_articles(
         self, user_keywords: List[str], limit: int = 10
     ) -> List[Dict]:
         """Fetch articles based on user preferences."""
-        all_articles = []
-
-        for keyword in user_keywords:
-            articles = self.api.fetch_by_keyword(keyword, limit=3)
-            all_articles.extend(articles)
-
-        # Store articles in database
-        for article in all_articles:
-            self.db.insert_article(
-                article["id"],
-                article["title"],
-                article["content"],
-                article["url"],
-                article["source"],
-                article["keywords"],
-            )
-
-        return all_articles[:limit]
-
-    def fetch_exploration_articles(
-        self, categories: List[str], limit: int = 5
-    ) -> List[Dict]:
-        """Fetch articles from exploration categories."""
-        all_articles = []
-
-        for category in categories:
-            articles = self.api.fetch_by_category(category, limit=2)
-            all_articles.extend(articles)
-
-        # Store articles in database
-        for article in all_articles:
-            self.db.insert_article(
-                article["id"],
-                article["title"],
-                article["content"],
-                article["url"],
-                article["source"],
-                article["keywords"],
-            )
-
-        return all_articles[:limit]
+        articles = self.api.fetch_by_keyword(user_keywords, limit=limit)
+        self._save_articles(articles)
+        return articles
 
     def fetch_general_articles(self, limit: int = 3) -> List[Dict]:
         """Fetch general trending articles."""
         articles = self.api.fetch_general(limit)
-
-        # Store articles in database
-        for article in articles:
-            self.db.insert_article(
-                article["id"],
-                article["title"],
-                article["content"],
-                article["url"],
-                article["source"],
-                article["keywords"],
-            )
-
+        self._save_articles(articles)
         return articles
-
-    def get_recommended_articles(self, limit: int = 20) -> List[Dict]:
-        """Get recommended articles using 70/20/10 strategy."""
-        # Get user's top keywords
-        top_keywords = self.db.get_top_keywords(limit=5)
-
-        articles = []
-
-        # 70% personalized content
-        if top_keywords:
-            personalized = self.fetch_personalized_articles(top_keywords[:3], limit=14)
-            articles.extend(personalized)
-
-        # 20% exploration content
-        exploration_categories = [
-            "technology",
-            "business",
-            "science",
-            "health",
-            "sports",
-        ]
-        exploration = self.fetch_exploration_articles(
-            exploration_categories[:2], limit=4
-        )
-        articles.extend(exploration)
-
-        # 10% general content
-        general = self.fetch_general_articles(limit=2)
-        articles.extend(general)
-
-        # Remove duplicates and limit results
-        seen_ids = set()
-        unique_articles = []
-        for article in articles:
-            if article["id"] not in seen_ids:
-                seen_ids.add(article["id"])
-                unique_articles.append(article)
-                if len(unique_articles) >= limit:
-                    break
-
-        return unique_articles
-
-
-# For testing
-if __name__ == "__main__":
-    fetcher = NewsFetcher()
-    articles = fetcher.get_recommended_articles(limit=10)
-    for article in articles:
-        print(f"- {article['title']}")
