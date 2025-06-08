@@ -1,9 +1,8 @@
 import sqlite3
-import os
-from datetime import datetime
 from typing import List, Dict, Optional
 
 DATABASE_PATH = "news_curator.db"
+
 
 def init_database():
     """Initialize the SQLite database with required tables."""
@@ -19,7 +18,8 @@ def init_database():
             url TEXT NOT NULL,
             source TEXT,
             fetch_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            keywords TEXT
+            keywords TEXT,
+            published_at TEXT
         )
     """)
 
@@ -46,23 +46,36 @@ def init_database():
     conn.commit()
     conn.close()
 
+
 def get_connection():
     """Get a database connection."""
     return sqlite3.connect(DATABASE_PATH)
+
 
 class DatabaseManager:
     """Database operations manager."""
 
     @staticmethod
-    def insert_article(article_id: str, title: str, content: str, url: str, source: str, keywords: str = ""):
+    def insert_article(
+        article_id: str,
+        title: str,
+        content: str,
+        url: str,
+        source: str,
+        published_at: str,
+        keywords: str = "",
+    ):
         """Insert a new article into the database."""
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
-            INSERT OR REPLACE INTO articles (id, title, content, url, source, keywords)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (article_id, title, content, url, source, keywords))
+        cursor.execute(
+            """
+            INSERT OR REPLACE INTO articles (id, title, content, url, source, published_at, keywords)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """,
+            (article_id, title, content, url, source, published_at, keywords),
+        )
 
         conn.commit()
         conn.close()
@@ -86,10 +99,13 @@ class DatabaseManager:
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
+        cursor.execute(
+            """
             INSERT INTO user_reactions (article_id, reaction)
             VALUES (?, ?)
-        """, (article_id, reaction))
+        """,
+            (article_id, reaction),
+        )
 
         conn.commit()
         conn.close()
@@ -112,10 +128,13 @@ class DatabaseManager:
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
+        cursor.execute(
+            """
             INSERT OR REPLACE INTO preferences (keyword, weight, last_updated)
             VALUES (?, ?, CURRENT_TIMESTAMP)
-        """, (keyword, weight))
+        """,
+            (keyword, weight),
+        )
 
         conn.commit()
         conn.close()
@@ -139,12 +158,15 @@ class DatabaseManager:
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
+        cursor.execute(
+            """
             SELECT keyword FROM preferences
             WHERE weight > 0
             ORDER BY weight DESC
             LIMIT ?
-        """, (limit,))
+        """,
+            (limit,),
+        )
 
         rows = cursor.fetchall()
         conn.close()
@@ -162,6 +184,7 @@ class DatabaseManager:
 
         conn.commit()
         conn.close()
+
 
 # Initialize database when module is imported
 if __name__ == "__main__":

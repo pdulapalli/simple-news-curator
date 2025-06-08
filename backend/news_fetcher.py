@@ -3,7 +3,6 @@ import json
 import requests
 import hashlib
 from typing import List, Dict, Optional
-from datetime import datetime
 from database import DatabaseManager
 
 NEWS_KIND = "top"
@@ -135,6 +134,7 @@ class NewsAPI:
                 "categories": article.get("categories", ""),
                 "keywords": ", ".join(keywords),
                 "relevance_score": article.get("relevance_score"),
+                "published_at": article.get("published_at"),
             }
 
             processed.append(processed_article)
@@ -204,6 +204,7 @@ class NewsFetcher:
                 article["content"],
                 article["url"],
                 article["source"],
+                article["published_at"],
                 article["keywords"],
             )
 
