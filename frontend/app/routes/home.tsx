@@ -10,7 +10,7 @@ interface Article {
   keywords: string;
 }
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "News Curator" },
     { name: "description", content: "Your personalized news feed" },
@@ -96,11 +96,11 @@ export default function Home() {
         },
         body: JSON.stringify({ reaction }),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to submit reaction');
       }
-      
+
       // Optionally refresh articles to get updated recommendations
       await fetchArticles();
     } catch (err) {
@@ -115,7 +115,10 @@ export default function Home() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-lg">Loading your personalized news...</div>
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"></div>
+          <div className="text-xl font-semibold text-gray-700">Loading your news...</div>
+        </div>
       </div>
     );
   }
